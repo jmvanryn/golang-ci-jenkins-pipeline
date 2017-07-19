@@ -1,12 +1,13 @@
 node('cloud-d15') {
     def root = tool name: 'Go1.8', type: 'go'
-    ws {
-        withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin", "GOPATH=/home/jenkins/go", "PATH=${GOPATH}/bin:${PATHGO}:${PATH}"]) {
-            sh 'mkdir -p ${GOPATH} '
+    env.GOROOT = root
+    env.GOPATH = "/home/jenkins/go"
+    sh "echo ${GOPATH} && echo ${GOROOT} && mkdir -p ${GOPATH}"
+    env.PATH = "${root}/bin:${env.GOPATH}/bin:${env.PATH}"
 
             stage 'Checkout'
         
-            git url: 'https://github.com/grugrut/golang-ci-jenkins-pipeline.git'
+            git url: 'https://github.com/jmvanryn/golang-ci-jenkins-pipeline.git'
         
             stage 'preTest'
             sh 'go version '
@@ -22,6 +23,4 @@ node('cloud-d15') {
             
             stage 'Deploy'
             // Do nothing.
-        }
-    }
 }
