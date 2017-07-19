@@ -9,7 +9,7 @@ node('cloud-d15') {
             git url: 'https://github.com/grugrut/golang-ci-jenkins-pipeline.git'
         
             stage 'preTest'
-            sh 'go version'
+            sh 'go version && echo $(go env GOPATH)'
             sh 'go get -u github.com/golang/dep/...'
             sh 'dep init'
             
