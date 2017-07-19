@@ -1,7 +1,8 @@
 node('cloud-d15') {
     def root = tool name: 'Go1.8', type: 'go'
     ws {
-        withEnv(["GOROOT=${root}", "GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/", "PATH+GO=${root}/bin"]) {
+        withEnv {
+            env.GOPATH="$(go env GOPATH)"
             env.PATH="${GOPATH}/bin:$PATH"
             
             stage 'Checkout'
